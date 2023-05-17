@@ -7,7 +7,7 @@
 }
 
 
-.junk img{
+.rightDiv img{
   width:50px;
 }
 .expensesListItem{
@@ -39,7 +39,7 @@ border-bottom: 5px solid black;
 .rightDiv{
   width:fit-content;
   text-align: center;
-
+  box-sizing: border-box;
 }
 .expensesListItem h3{
 margin:0;
@@ -68,4 +68,12 @@ padding-bottom: 5px;
   padding:5px 15px;
   border-radius: 10px;
   margin-top: 10px;
+}
+.junkButton{
+  background: rgb(169, 165, 165);
+  width:fit-content;
+  padding:5px 10px;
+}
+.junkButton:hover{
+  border:3px solid rgb(219, 215, 215);
 }
