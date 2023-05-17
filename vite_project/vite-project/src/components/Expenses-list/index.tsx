@@ -1,26 +1,16 @@
 import data from '../data/data.tsx';
 // import Unit from '../Unit/index.tsx';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 
 export default function ExpensesList (){
-    const [rankClass, setRankClass] = useState("");
-    const [expenseRankText, setRankTest] = useState("");
+   
     let [allData, setData] = useState(data);  
     
     
     let oneToDelete ="";
 
-    
-    useEffect(() => {
-        if (501> 500) {
-            setRankClass("highExpense")
-            setRankTest("High Expense")
-        } else {
-            setRankClass("lowExpense")
-            setRankTest("Low Expense")
-        }
-    })
+  
 
     function deleteUnit(oneToDelete:any){
         const newData = allData.filter((u)=>u.name !== oneToDelete);
@@ -40,7 +30,7 @@ export default function ExpensesList (){
             <div className="dataDiv">
                 <div className="leftDiv">
                     <div>{item.date.toLocaleString()}</div>
-                    <div className={rankClass}>{expenseRankText}</div>
+                    <div className={item.amount>1000?"highExpense":"lowExpense"}>{item.amount>1000?"high Expense":"low Expense"}</div>
                     <div className="category">{item.category}</div>
                 </div>
                 <div className="rightDiv">
