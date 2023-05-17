@@ -4,6 +4,8 @@ function Unit(props: any) {
 
     const [rankClass, setRankClass] = useState("");
     const [expenseRankText, setRankTest] = useState("");
+     
+     
 
     useEffect(() => {
 
@@ -35,6 +37,7 @@ function Unit(props: any) {
 
                 </div>
             </div>
+            {props.iToDelete}
         </>
 
     )
