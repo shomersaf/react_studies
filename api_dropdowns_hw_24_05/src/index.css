@@ -116,12 +116,27 @@ h3{
 }
 .p-multiselect{
   border-radius: 10px;
-background: #c6d3cd;
+background: #7b888e;
 }
 h4{
   text-align: center;
-    color:#268e8e;
+
+  color:rgb(163, 192, 112);
+}
+h5{
+  text-align: center;
+  text-transform: uppercase;
+  color:rgb(29, 43, 3);
+  margin:0;
 }
 .footer{
  padding-top: 30px;
+}
+.p-multiselect .p-multiselect-trigger{
+  color:black;
+}
+.graphs{
+  display: flex;
+  margin: 0 auto;
+  width: fit-content;
 }
