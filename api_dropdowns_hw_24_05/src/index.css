@@ -104,6 +104,7 @@ button{
 .formDiv{
   width:100%;
   background: #268e8e;
+  color:white;
 }
 .reportsDiv{
   width:100%;
@@ -142,4 +143,7 @@ h5{
 }
 .blabla{
   padding:20px;
+}
+.categoryDiv span{
+  color: white;
 }
