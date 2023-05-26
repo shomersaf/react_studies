@@ -21,8 +21,7 @@ function App() {
     const [reportButtonText, setReportsButtonText] = useState<string>("Show Reports");
     const [formVisible, setFormVisible] = useState<boolean>(false);
     const [reportsVisible, setReportVisible] = useState<boolean>(false);
-    
-  
+     
     useEffect(() => {
         async function getExpenses() {
             try {
@@ -71,7 +70,7 @@ function App() {
                
           }} categories={resValues}/> : null}
             {reportsVisible ? <ReportsContainer expenses={selectedValues} /> : null}
-            {resValues ? <DataViewContainer one={selectedValues} all={selectedValues} /> : <ProgressSpinner />}
+            {resValues ? <DataViewContainer all={selectedValues} /> : <ProgressSpinner />}
             <Footer />
         </div>
     )
