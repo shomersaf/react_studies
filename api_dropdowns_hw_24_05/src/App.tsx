@@ -16,16 +16,13 @@ import Footer from './components/Footer';
 function App() {
     const toast = useRef<any>(null);
     const [resValues, setValues] = useState<any>(null);
-   
-    const [selectedValue, setSelectedValue] = useState<any>();
     const [selectedValues, setSelectedValues] = useState<any>([]);
     const [expenseButtonText, setExpenseButtonText] = useState<string>("Show Expense Form");
     const [reportButtonText, setReportsButtonText] = useState<string>("Show Reports");
     const [formVisible, setFormVisible] = useState<boolean>(false);
     const [reportsVisible, setReportVisible] = useState<boolean>(false);
-
-
-
+    
+  
     useEffect(() => {
         async function getExpenses() {
             try {
@@ -33,8 +30,8 @@ function App() {
                 const dataWithDates = result.data.map((e: any) => {
                     return { ...e, date: new Date(e.date).getFullYear() };
                 });
-                setValues(dataWithDates);
-                setSelectedValues(dataWithDates);
+                resValues? setValues(resValues):setValues(dataWithDates);
+                resValues? setSelectedValues(resValues): setSelectedValues(dataWithDates);
             } catch (error) {
                 console.log(error)
                 toast?.current?.show({
@@ -42,9 +39,7 @@ function App() {
                     summary: "Something Went wrong",
                     detail: "Please try again",
                 });
-
             } finally {
-
             }
         }
         getExpenses()
@@ -59,26 +54,25 @@ function App() {
                 <Toast ref={toast} />
                 <div className="categoryDiv">
                     <span>Category: </span>
-                    <MultiSelect value={selectedValues} onChange={(e) => { setSelectedValue(e.value); setSelectedValues(e.value) }} options={resValues} optionLabel="category"
+                    <MultiSelect value={selectedValues} onChange={(e) => { setSelectedValues(e.value);}}
+                     options={resValues} optionLabel="category"
                         filter maxSelectedLabels={3} className="w-full md:w-20rem" />
                 </div>
-
-
                 <div className="categoryDiv">
                     <span>Year: </span>
-                    <MultiSelect value={selectedValues} onChange={(e) => { setSelectedValue(e.value); setSelectedValues(e.value) }} options={resValues} optionLabel="date"
+                    <MultiSelect value={selectedValues} onChange={(e) => {setSelectedValues(e.value);}} options={resValues} optionLabel="date"
                         filter maxSelectedLabels={3} className="w-full md:w-20rem" />
                 </div>
-
             </div>
 
-
-            {formVisible ? <FormContainer /> : null}
+            {formVisible ? <FormContainer  onSave={(expense: any) => { 
+             setValues([...resValues, expense]);
+             setSelectedValues([...resValues, expense]);
+               
+          }} categories={resValues}/> : null}
             {reportsVisible ? <ReportsContainer expenses={selectedValues} /> : null}
-            {resValues ? <DataViewContainer one={selectedValue} all={selectedValues} /> : <ProgressSpinner />}
-
+            {resValues ? <DataViewContainer one={selectedValues} all={selectedValues} /> : <ProgressSpinner />}
             <Footer />
-
         </div>
     )
 }

@@ -114,6 +114,7 @@ button{
 h3{
   text-align: center;
   text-transform: uppercase;
+  margin:10px;
 }
 .p-multiselect{
   border-radius: 10px;
@@ -141,9 +142,15 @@ h5{
   margin: 0 auto;
   width: fit-content;
 }
-.blabla{
-  padding:20px;
-}
+
 .categoryDiv span{
   color: white;
+}
+.form{
+  min-width:inherit;
+  padding:10px;
+  margin: 0 auto;
+   background: #1f7171;
+  display: flex;
+  justify-content: space-between;
 }
