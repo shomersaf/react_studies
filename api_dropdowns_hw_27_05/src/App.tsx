@@ -20,46 +20,49 @@ function App() {
     const [expenseButtonText, setExpenseButtonText] = useState<string>("Show Expense Form");
     const [reportButtonText, setReportsButtonText] = useState<string>("Show Reports");
     const [formVisible, setFormVisible] = useState<boolean>(false);
-    const [reportsVisible, setReportVisible] = useState<boolean>(false);
-  
-     
+    const [reportsVisible, setReportVisible] = useState<boolean>(false);    
+       const url="http://localhost:3600";
+       const expensesSuffix="expenses";
+
+
+    async function getExpenses() {
+        try {
+            const result = await axios.get(`${url}/${expensesSuffix}`);
+            const dataWithDates = result.data.map((e: any) => {
+                return { ...e, date:new Date(e.date).getFullYear() };
+            });
+            resValues? setValues(resValues):setValues(dataWithDates);
+            resValues? setSelectedValues(resValues): setSelectedValues(dataWithDates);
+        } catch (error) {
+            console.log(error)
+            toast?.current?.show({
+                severity: error,
+                summary: "Something Went wrong",
+                detail: "Please try again",
+            });
+        } 
+    }
+
     useEffect(() => {
-        async function getExpenses(url:string) {
-            try {
-                const result = await axios.get(url);
-                const dataWithDates = result.data.map((e: any) => {
-                    return { ...e, date: new Date(e.date).getFullYear() };
-                });
-                resValues? setValues(resValues):setValues(dataWithDates);
-                resValues? setSelectedValues(resValues): setSelectedValues(dataWithDates);
-            } catch (error) {
-                console.log(error)
-                toast?.current?.show({
-                    severity: error,
-                    summary: "Something Went wrong",
-                    detail: "Please try again",
-                });
-            } finally {
-            }
-        }
-        getExpenses("http://localhost:3600/expenses")
+        getExpenses()
     }, []);
 
     return (
         <div className="container">
-            <Header headerText={"Stacey's Expenses App"} />
+            <Header headerText={"HW Deleting from API"} />
             <div className="controlls">
                 <Button severity="secondary" rounded onClick={() => { setFormVisible((expenseButtonText === "Show Expense Form") ? true : false); setExpenseButtonText(formVisible ? "Show Expense Form" : "Hide Expense Form") }}><span>{expenseButtonText}</span></Button>
                 <Button severity="secondary" rounded onClick={() => { setReportVisible((reportButtonText === "Show Reports") ? true : false); setReportsButtonText(reportsVisible ? "Show Reports" : "Hide Reports") }}><span>{reportButtonText}</span></Button>
                 <Toast ref={toast} />
+
                 <div className="categoryDiv">
-                    <span>Category: </span>
+                    <span>Category </span>
                     <MultiSelect value={selectedValues} onChange={(e) => { setSelectedValues(e.value);}}
                      options={resValues} optionLabel="category"
                         filter maxSelectedLabels={3} className="w-full md:w-20rem" />
                 </div>
                 <div className="categoryDiv">
-                    <span>Year: </span>
+                    <span>Year </span>
                     <MultiSelect value={selectedValues} onChange={(e) => {setSelectedValues(e.value);}} options={resValues} optionLabel="date"
                         filter maxSelectedLabels={3} className="w-full md:w-20rem" />
                 </div>
@@ -68,6 +71,8 @@ function App() {
             {formVisible ? <FormContainer  onSave={(expense: any) => { 
              setValues([...resValues, expense]);
              setSelectedValues([...resValues, expense]);
+           
+           
                
           }} categories={resValues}/> : null}
             {reportsVisible ? <ReportsContainer expenses={selectedValues} /> : null}
