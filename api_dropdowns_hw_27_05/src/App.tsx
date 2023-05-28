@@ -49,7 +49,7 @@ function App() {
 
     return (
         <div className="container">
-            <Header headerText={"HW Deleting from API"} />
+            <Header headerText={"HW24/5 API Deleting & API Statistics"} />
             <div className="controlls">
                 <Button severity="secondary" rounded onClick={() => { setFormVisible((expenseButtonText === "Show Expense Form") ? true : false); setExpenseButtonText(formVisible ? "Show Expense Form" : "Hide Expense Form") }}><span>{expenseButtonText}</span></Button>
                 <Button severity="secondary" rounded onClick={() => { setReportVisible((reportButtonText === "Show Reports") ? true : false); setReportsButtonText(reportsVisible ? "Show Reports" : "Hide Reports") }}><span>{reportButtonText}</span></Button>

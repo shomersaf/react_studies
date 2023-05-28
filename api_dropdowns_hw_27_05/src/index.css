@@ -156,3 +156,15 @@ h5{
   display: flex;
   justify-content: space-between;
 }
+header{
+  display: flex;
+  width:90%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+header p{
+  margin:0;
+  margin-bottom: 10px;
+}
+

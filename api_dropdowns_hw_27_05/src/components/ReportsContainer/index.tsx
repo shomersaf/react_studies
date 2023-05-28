@@ -1,9 +1,12 @@
 
 import { Chart } from 'primereact/chart';
-
+import {useState, useEffect } from "react";
+import axios from "axios";
 export default function ReportsContainer(props: any) {
   const { expenses } = props;
- 
+  const url="http://localhost:3600";
+ const [statisicValues, setStaticticValues] = useState({})
+ const [statisicKeys, setStaticticKeys] = useState({})
   var allCategories = expenses
     .reduce((newObj: any, expense: any) => {
       if (!Object.hasOwn(newObj, expense.category)) {
@@ -63,6 +66,39 @@ export default function ReportsContainer(props: any) {
       }
     ]
   };
+  const chartData3 = {
+    labels: [...Object.values(statisicKeys)],
+    datasets: [
+      {
+        data: [...Object.values(statisicValues)],
+        backgroundColor: [
+          "red",
+          "blue",
+          "green",
+          "orange",
+          "yellow",
+          "purple",
+
+        ],
+
+      }
+    ]
+  };
+
+  async function getStat () {
+    try {
+       const result = await axios.get(`${url}/expenses/stats`);
+       setStaticticKeys(result.data.labels)
+       setStaticticValues(result.data.data)
+        return result.data;
+    } catch (error) {
+        console.log(error)
+    } 
+}
+
+useEffect(() => {
+    getStat()
+}, []);
 
   return (
     <div className="reportsDiv">
@@ -77,7 +113,12 @@ export default function ReportsContainer(props: any) {
         <Chart type="pie" data={chartData2} style={{ margin: '0 auto', width: '100%'}} />
       </div>
       </div>
+      <div className="card flex justify-content-center">
+      <h5>API statistics</h5>
+        <Chart type="pie" data={chartData3} style={{ margin: '0 auto', width: '40%'}} />
+      </div>
+      </div>
      
-    </div>
+  
   )
 }
