@@ -29,9 +29,10 @@ function App() {
     async function getExpenses() {
         try {
             const result = await axios.get(`${url}/${expensesSuffix}`);
-            const dataWithDates = result.data.map((e: any) => {
+            const dataWithDates = result?.data.map((e: any) => {
                 return { ...e, date:new Date(e.date).getFullYear() };
             });
+           
             resValues? setValues(resValues):setValues(dataWithDates);
             resValues? setSelectedValues(resValues): setSelectedValues(dataWithDates);
         } catch (error) {
@@ -45,7 +46,7 @@ function App() {
     }
 
     useEffect(() => {
-        getExpenses()
+       getExpenses()    
     }, []);
 
     return (
@@ -71,8 +72,12 @@ function App() {
 
             {formVisible ? <FormContainer  onSave={(expense: any) => { 
              postExpense(expense);
-             setValues(resValues)
+            
+                getExpenses()
+           
+             setValues(resValues);
              setSelectedValues(resValues);
+             
            
            
                

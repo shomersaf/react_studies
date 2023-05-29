@@ -3,24 +3,67 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 export default function FormContainer(props: any) {
   const [textValue, setTextValue] = useState<string>("");
   const [numValue, setNumValue] = useState<number>();
-  const [date, setDate] = useState<Date>();
+  // const [date, setDate] = useState<Date>();
   const [selectedCategory, setSelectedCategory] = useState<any>();
+  const [apiCategories, setApiCategories] = useState<any>();
+  const [selectedYears, setSelectedYears] = useState<any>();
+  const [apiYears, setApiYears] = useState<any>();
+  const url="http://localhost:3600";
  
   function handler() {
   
     props.onSave({
-      date: new Date(date as any),
+      date: apiYears.date.toString(),
       amount: numValue,
       name: textValue,
-      category:selectedCategory.category,
+      category:apiCategories.category,
     });
   }
+
+
+  async function getCategories() {
+    try {
+        const result = await axios.get(`${url}/categories`);
+        const categories = result?.data.map((e: any) => {
+            return {...e,category:e};
+        });
+      
+       setApiCategories(categories)
+        setSelectedCategory(categories)
+        console.log(selectedCategory[0].category)
+      
+    } catch (error) {
+        console.log(error)
+    } 
+}
+
+async function getYears() {
+  try {
+      const result = await axios.get(`${url}/years`);
+      const years = result?.data.map((e: any) => {
+          return {...e,date:e};
+      });
+    
+     setApiYears(years)
+      setSelectedYears(years)
+      console.log(selectedYears[0].date)
+    
+  } catch (error) {
+      console.log(error)
+  } 
+}
+
+useEffect(() => {
+  getCategories() 
+  getYears()  
+}, []);
+
 
   return (
     <div className="formDiv">
@@ -29,11 +72,13 @@ export default function FormContainer(props: any) {
         <div className="form">
           <InputText placeholder={"title"} value={textValue} onChange={(e) => setTextValue(e.target.value)}/>
           <InputNumber placeholder={"$ amount"} value={numValue} onValueChange={(e) => setNumValue(e.value as number)} />
-          <Calendar placeholder={"date"} value={date} onChange={(e) => setDate(e.value as Date)} showIcon />
-          <Dropdown value={selectedCategory} options={props.categories} optionLabel="category" showClear placeholder="Select a Category"
-            filter className="w-full md:w-14rem"  onChange={(e) => {setSelectedCategory(e.value)}} />
-         
-      
+          {/* <Calendar placeholder={"date"} value={date} onChange={(e) => setDate(e.value as Date)} showIcon /> */}
+          {/* <Dropdown value={selectedCategory} options={props.categories} optionLabel="category" showClear placeholder="Select a Category"
+            filter className="w-full md:w-14rem"  onChange={(e) => {setSelectedCategory(e.value)}} /> */}
+              <Dropdown value={apiYears} options={selectedYears} optionLabel="date" showClear placeholder="Select a Year"
+            filter className="w-full md:w-14rem"  onChange={(e) => {setApiYears(e.value)}} />
+              <Dropdown value={apiCategories} options={selectedCategory} optionLabel="category" showClear placeholder="Select a Category"
+            filter className="w-full md:w-14rem"  onChange={(e) => {setApiCategories(e.value)}} />
         <Button label="Add" icon="pi pi-check" rounded onClick={handler} /></div>
       </div>
     </div>
