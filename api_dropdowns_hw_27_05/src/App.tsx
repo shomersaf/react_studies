@@ -12,6 +12,7 @@ import ReportsContainer from './components/ReportsContainer';
 import { MultiSelect } from 'primereact/multiselect';
 import { ProgressSpinner } from "primereact/progressspinner";
 import Footer from './components/Footer';
+import postExpense from './servise/postExpense';
 
 function App() {
     const toast = useRef<any>(null);
@@ -69,8 +70,9 @@ function App() {
             </div>
 
             {formVisible ? <FormContainer  onSave={(expense: any) => { 
-             setValues([...resValues, expense]);
-             setSelectedValues([...resValues, expense]);
+             postExpense(expense);
+             setValues(resValues)
+             setSelectedValues(resValues);
            
            
                

@@ -5,6 +5,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { useState } from 'react';
 
+
 export default function FormContainer(props: any) {
   const [textValue, setTextValue] = useState<string>("");
   const [numValue, setNumValue] = useState<number>();
@@ -14,9 +15,9 @@ export default function FormContainer(props: any) {
   function handler() {
   
     props.onSave({
-      name: textValue,
+      date: new Date(date as any),
       amount: numValue,
-      date: new Date(date as any).getFullYear(),
+      name: textValue,
       category:selectedCategory.category,
     });
   }

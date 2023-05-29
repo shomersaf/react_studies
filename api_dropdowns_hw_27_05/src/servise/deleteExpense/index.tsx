@@ -1,13 +1,12 @@
 import axios from "axios";
 const url="http://localhost:3600"
+
 export default async function deleteExpense(exName: any): Promise<any> {
-    let str = Object.values(exName).toString()
-    str= str.replace(/[\,%]/g, '')
-    console.log(`exterminate ${str}!`);
+    console.log(exName);
     const result = await axios.post(`${url}/delete-expense`, {
-        name: str,
+        name: exName,
       });
-      alert(`${str} ${result.data.message}`);
-      window.location.reload();
+      alert(`${exName} ${result.data.message}`);
+       window.location.reload();
       return (result.data)
   }
