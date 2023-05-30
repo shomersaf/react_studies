@@ -1,20 +1,20 @@
 import { Button } from 'primereact/button';
-import Header from "./components/Header"
+import Header from "../../Header"
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Toast } from 'primereact/toast';
-import DataViewContainer from './components/DataViewContainer';
-import FormContainer from './components/FormContainer';
-import ReportsContainer from './components/ReportsContainer';
+import DataViewContainer from './DataViewContainer';
+import FormContainer from './FormContainer';
+import ReportsContainer from './ReportsContainer';
 import { MultiSelect } from 'primereact/multiselect';
 import { ProgressSpinner } from "primereact/progressspinner";
-import Footer from './components/Footer';
-import postExpense from './servise/postExpense';
+import Footer from '../../Footer';
+import postExpense from '../../../servise/postExpense';
 
-function AppComponent() {
+function Expenses() {
     const toast = useRef<any>(null);
     const [resValues, setValues] = useState<any>(null);
     const [selectedValues, setSelectedValues] = useState<any>([]);
@@ -24,7 +24,6 @@ function AppComponent() {
     const [reportsVisible, setReportVisible] = useState<boolean>(false);    
        const url="http://localhost:3600";
        const expensesSuffix="expenses";
-
 
     async function getExpenses() {
         try {
@@ -44,14 +43,12 @@ function AppComponent() {
             });
         } 
     }
-
     useEffect(() => {
        getExpenses()    
     }, []);
-
     return (
         <div className="container">
-            <Header headerText={"HW24/5 API Deleting & API Statistics"} />
+            <Header headerText={"HW30/5 React Routing"} />
             <div className="controlls">
                 <Button severity="secondary" rounded onClick={() => { setFormVisible((expenseButtonText === "Show Expense Form") ? true : false); setExpenseButtonText(formVisible ? "Show Expense Form" : "Hide Expense Form") }}><span>{expenseButtonText}</span></Button>
                 <Button severity="secondary" rounded onClick={() => { setReportVisible((reportButtonText === "Show Reports") ? true : false); setReportsButtonText(reportsVisible ? "Show Reports" : "Hide Reports") }}><span>{reportButtonText}</span></Button>
@@ -69,18 +66,11 @@ function AppComponent() {
                         filter maxSelectedLabels={3} className="w-full md:w-20rem" />
                 </div>
             </div>
-
             {formVisible ? <FormContainer  onSave={(expense: any) => { 
              postExpense(expense);
-            
                 getExpenses()
-           
              setValues(resValues);
-             setSelectedValues(resValues);
-             
-           
-           
-               
+             setSelectedValues(resValues);     
           }} categories={resValues}/> : null}
             {reportsVisible ? <ReportsContainer expenses={selectedValues} /> : null}
             {resValues ? <DataViewContainer all={selectedValues} /> : <ProgressSpinner />}
@@ -88,5 +78,4 @@ function AppComponent() {
         </div>
     )
 }
-
-export default AppComponent
+export default Expenses
