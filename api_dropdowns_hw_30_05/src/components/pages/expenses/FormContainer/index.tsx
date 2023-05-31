@@ -1,6 +1,5 @@
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
-// import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { useState, useEffect } from 'react';
@@ -9,7 +8,6 @@ import axios from "axios";
 export default function FormContainer(props: any) {
   const [textValue, setTextValue] = useState<string>("");
   const [numValue, setNumValue] = useState<number>();
-  // const [date, setDate] = useState<Date>();
   const [selectedCategory, setSelectedCategory] = useState<any>();
   const [apiCategories, setApiCategories] = useState<any>();
   const [selectedYears, setSelectedYears] = useState<any>();
@@ -71,10 +69,7 @@ useEffect(() => {
       <div className="formDiv">
         <div className="form">
           <InputText placeholder={"title"} value={textValue} onChange={(e) => setTextValue(e.target.value)}/>
-          <InputNumber placeholder={"$ amount"} value={numValue} onValueChange={(e) => setNumValue(e.value as number)} />
-          {/* <Calendar placeholder={"date"} value={date} onChange={(e) => setDate(e.value as Date)} showIcon /> */}
-          {/* <Dropdown value={selectedCategory} options={props.categories} optionLabel="category" showClear placeholder="Select a Category"
-            filter className="w-full md:w-14rem"  onChange={(e) => {setSelectedCategory(e.value)}} /> */}
+          <InputNumber placeholder={"$ amount"} value={numValue} onChange={(e) => setNumValue(e.value as number)} />
               <Dropdown value={apiYears} options={selectedYears} optionLabel="date" showClear placeholder="Select a Year"
             filter className="w-full md:w-14rem"  onChange={(e) => {setApiYears(e.value)}} />
               <Dropdown value={apiCategories} options={selectedCategory} optionLabel="category" showClear placeholder="Select a Category"
