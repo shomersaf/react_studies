@@ -7,18 +7,28 @@ import Register from "./components/pages/register";
 import Users from "./components/pages/users";
 import Logout from "./components/pages/logout";
 import NotFound from "./components/pages/not-found";
+import React ,{ lazy, Suspense} from "react"
+
 
 interface IRoute {
     path: string,
-    component: ()=>JSX.Element,
+    component: any
     label:string,
     severity: any,
     icon: string,
     isVisible:boolean,
 }
-
+const SystemPreferences = lazy(() => import('./components/SystemPreferences'));
 
 const routes: Array<IRoute> = [
+    {
+        path: "/sp",
+        component: SystemPreferences,
+        label:"SystemPreferences",
+        severity: "secondary",
+        icon: "pi pi-sign-in",
+        isVisible:true,
+    },
     {
         path: "/login",
         component: Login,
@@ -82,8 +92,9 @@ export default function App(){
 }
 function AppLinks(props:{routes:Array<IRoute>}){
     return(
-        <>
-             <div className="navDiv">
+       
+        <Suspense fallback={<span>Loading...</span>}>
+        <div className="navDiv">
             {props.routes.filter((r)=>r.isVisible).map((route:IRoute)=>{
                 return  <Link to={route.path}><Button label={route.label} severity={route.severity} icon={route.icon} /></Link>
             })}
@@ -92,7 +103,9 @@ function AppLinks(props:{routes:Array<IRoute>}){
             {props.routes.map((route:IRoute)=>{
                 return <Route path={route.path} Component={route.component} />
             })}
-        </Routes></>
+        </Routes></Suspense>
+        
+        
     )
 }
 
