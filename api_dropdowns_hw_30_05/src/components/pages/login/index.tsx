@@ -10,15 +10,15 @@ export default function Login(){
     const [userEmail, setUserEmail] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
   
-
     function handler(props:any){
         props.userData = {
             email: userEmail,
             password: userPassword,
             };
-        // console.log(props.userData)
+     
         loginUser(props.userData)
     }
+    
     return (
     <div className="container">
     <h1>Log in</h1> 
