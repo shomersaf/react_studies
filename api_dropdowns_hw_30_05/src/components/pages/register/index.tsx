@@ -9,17 +9,35 @@ export default function Register(){
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
+   
 
     function handler(props:any){
+      function validatePassword () {
+           if (userPassword!==confirmPassword){
+            alert("wrong password entered!")
+            
+        }else{
+           
+            registrateUser(props.userData)
+           
+        }
+          
+        }
+
         props.userData = {
             email: userEmail,
             password: userPassword,
             firstName: firstName,
             lastName: lastName,
             };
-     
-            registrateUser(props.userData)
+
+            validatePassword();
+
+       
     }
+
+
+  
 
     return (
         <div className="container">
