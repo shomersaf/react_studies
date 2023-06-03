@@ -2,6 +2,11 @@ import { BrowserRouter } from "react-router-dom"
 import React ,{ lazy, Suspense} from "react"
 import { Link,Routes,Route } from "react-router-dom"
 import { Button } from 'primereact/button';
+import ImageCp from "./components/ui/imageComponent";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+
 //import { color } from "chart.js/helpers";
 
 interface IRoute {
@@ -92,11 +97,12 @@ export default function App(){
 }
 function AppLinks(props:{routes:Array<IRoute>}){
     return(
-       
+      
+
         <Suspense fallback={<span>Loading...</span>}>
             
             <h1 style={{ backgroundColor: "black", width: "100%", minHeight: "50px", textAlign: "center"}}>HW 03/06 Lazy Loading, WithLoading, useImageLoading</h1>
-           
+            <ImageCp imageUrl="https://www.t8nmagazine.com/wp-content/uploads/2017/07/Financial-Literacy.jpg"/>
         <div className="navDiv">
             {props.routes.filter((r)=>r.isVisible).map((route:IRoute)=>{
                 return  <Link to={route.path} key={route.label} ><Button label={route.label} severity={route.severity} icon={route.icon} /></Link>

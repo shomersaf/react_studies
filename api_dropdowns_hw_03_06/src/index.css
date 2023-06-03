@@ -202,3 +202,7 @@ header p{
 .registration{
   height:400px;
 }
+.wrapper{
+  background: #000000;
+ padding:30px;
+}
