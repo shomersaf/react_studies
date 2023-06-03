@@ -59,7 +59,7 @@ const routes: Array<IRoute> = [
         isVisible:true,
     },
     {
-        path: "/expenses",
+        path: "/",
         component: ExpensesLazy,
         label:"Expenses",
         severity: "secondary",
@@ -101,7 +101,7 @@ function AppLinks(props:{routes:Array<IRoute>}){
 
         <Suspense fallback={<span>Loading...</span>}>
             
-            <h1 style={{ backgroundColor: "black", width: "100%", minHeight: "50px", textAlign: "center"}}>HW 03/06 Lazy Loading, WithLoading, useImageLoading</h1>
+            <h1 style={{ backgroundColor: "white", width: "100%", minHeight: "50px", textAlign: "center"}}>HW 03/06 Lazy Loading, WithLoading, useImageLoading</h1>
             <ImageCp imageUrl="https://www.t8nmagazine.com/wp-content/uploads/2017/07/Financial-Literacy.jpg"/>
         <div className="navDiv">
             {props.routes.filter((r)=>r.isVisible).map((route:IRoute)=>{
