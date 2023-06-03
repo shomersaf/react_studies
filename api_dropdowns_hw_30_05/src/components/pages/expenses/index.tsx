@@ -48,7 +48,7 @@ function Expenses() {
     }, []);
     return (
         <div className="container">
-            <Header headerText={"HW30/5 React Routing"} />
+            <Header headerText={"Expenses App"} />
             <div className="controlls">
                 <Button severity="secondary" rounded onClick={() => { setFormVisible((expenseButtonText === "Show Expense Form") ? true : false); setExpenseButtonText(formVisible ? "Show Expense Form" : "Hide Expense Form") }}><span>{expenseButtonText}</span></Button>
                 <Button severity="secondary" rounded onClick={() => { setReportVisible((reportButtonText === "Show Reports") ? true : false); setReportsButtonText(reportsVisible ? "Show Reports" : "Hide Reports") }}><span>{reportButtonText}</span></Button>

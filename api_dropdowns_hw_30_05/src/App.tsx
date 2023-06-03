@@ -1,29 +1,29 @@
 import { BrowserRouter } from "react-router-dom"
-import Expenses from "./components/pages/expenses"
+import React ,{ lazy, Suspense} from "react"
 import { Link,Routes,Route } from "react-router-dom"
 import { Button } from 'primereact/button';
-import Login from "./components/pages/login";
-import Register from "./components/pages/register";
-import Users from "./components/pages/users";
-import Logout from "./components/pages/logout";
-import NotFound from "./components/pages/not-found";
-import React ,{ lazy, Suspense} from "react"
-
+//import { color } from "chart.js/helpers";
 
 interface IRoute {
     path: string,
-    component: any
+    component: React.LazyExoticComponent<() => JSX.Element>
     label:string,
     severity: any,
     icon: string,
     isVisible:boolean,
 }
-const SystemPreferences = lazy(() => import('./components/SystemPreferences'));
+const SystemPreferencesLazy = lazy(() => import('./components/SystemPreferences'));
+const LoginLazy = lazy(() => import('./components/pages/login'));
+const RegisterLazy = lazy(() => import('./components/pages/register'));
+const UsersLazy = lazy(() => import('./components/pages/users'));
+const LogoutLazy = lazy(() => import('./components/pages/logout'));
+const ExpensesLazy = lazy(() => import('./components/pages/expenses'));
+const NotFoundLazy = lazy(() => import('./components/pages/not-found'));
 
 const routes: Array<IRoute> = [
     {
         path: "/sp",
-        component: SystemPreferences,
+        component: SystemPreferencesLazy,
         label:"SystemPreferences",
         severity: "secondary",
         icon: "pi pi-sign-in",
@@ -31,7 +31,7 @@ const routes: Array<IRoute> = [
     },
     {
         path: "/login",
-        component: Login,
+        component: LoginLazy,
         label:"Log in",
         severity: "secondary",
         icon: "pi pi-sign-in",
@@ -39,7 +39,7 @@ const routes: Array<IRoute> = [
     },
     {
         path: "/register",
-        component: Register,
+        component: RegisterLazy,
         label:"Register",
         severity: "secondary",
         icon: "pi pi-user",
@@ -47,7 +47,7 @@ const routes: Array<IRoute> = [
     },
     {
         path: "/users",
-        component: Users,
+        component: UsersLazy,
         label:"Users",
         severity: "secondary",
         icon: "pi pi-user",
@@ -55,7 +55,7 @@ const routes: Array<IRoute> = [
     },
     {
         path: "/expenses",
-        component: Expenses,
+        component: ExpensesLazy,
         label:"Expenses",
         severity: "secondary",
         icon: "pi pi-user",
@@ -63,7 +63,7 @@ const routes: Array<IRoute> = [
     },
     {
         path: "/logout",
-        component: Logout,
+        component: LogoutLazy,
         label:"Log out",
         severity: "secondary",
         icon: "pi pi-sign-out",
@@ -71,7 +71,7 @@ const routes: Array<IRoute> = [
     },
     {
         path: "*",
-        component: NotFound,
+        component: NotFoundLazy,
         label:"Not Found",
         severity: "secondary",
         icon: "pi pi-sign-out",
@@ -94,14 +94,17 @@ function AppLinks(props:{routes:Array<IRoute>}){
     return(
        
         <Suspense fallback={<span>Loading...</span>}>
+            
+            <h1 style={{ backgroundColor: "black", width: "100%", minHeight: "50px", textAlign: "center"}}>HW 03/06 Lazy Loading, WithLoading, useImageLoading</h1>
+           
         <div className="navDiv">
             {props.routes.filter((r)=>r.isVisible).map((route:IRoute)=>{
-                return  <Link to={route.path}><Button label={route.label} severity={route.severity} icon={route.icon} /></Link>
+                return  <Link to={route.path} key={route.label} ><Button label={route.label} severity={route.severity} icon={route.icon} /></Link>
             })}
             </div>
         <Routes>
             {props.routes.map((route:IRoute)=>{
-                return <Route path={route.path} Component={route.component} />
+                return <Route path={route.path} Component={route.component} key={route.label} />
             })}
         </Routes></Suspense>
         
